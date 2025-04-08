@@ -57,7 +57,7 @@ while 1:
 
 while 1:
 	try:
-		input_str = input("Выберите метод(введите 'все', чтобы запустить все и сразу): ")
+		input_str = input("Выберите метод или введите 'все', чтобы запустить все и сразу: ")
 		if input_str.strip().lower() == 'все':
 			preferred_method = None
 			break
@@ -68,7 +68,7 @@ while 1:
 		preferred_method = methods_list[index]
 		break
 	except ValueError:
-		print(f"Введите число от {1} до {len(methods_names)}")
+		print(f"Введите число от {1} до {len(methods_names)} или 'все'")
 
 while 1:
 	try:
