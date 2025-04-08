@@ -26,6 +26,20 @@ methods_list = [
 	simpson.calculate,
 ]
 
+def invoke(method):
+	k = 4 if method == simpson.calculate else 2
+	n = 4
+	I_prev = method(function, a, b, n)
+	n *= 2
+	I_current = method(function, a, b, n)
+
+	while abs((I_current - I_prev) / (2 ** k - 1)) > eps:
+		n *= 2
+		I_prev = I_current
+		I_current = method(function, a, b, n)
+
+	print(f'Значение интеграла: {I_current}\nЧисло разбиения интервала: {n}')
+
 for i in range(len(functions)):
 	print(f'{i + 1}: {functions[i][0]}')
 
@@ -43,7 +57,12 @@ while 1:
 
 while 1:
 	try:
-		index = int(input("Выберите метод: ")) - 1
+		input_str = input("Выберите метод(введите 'все', чтобы запустить все и сразу): ")
+		if input_str.strip().lower() == 'все':
+			preferred_method = None
+			break
+		else:
+			index = int(input_str) - 1
 		if index < 0 or index >= len(methods_names):
 			raise ValueError
 		preferred_method = methods_list[index]
@@ -72,15 +91,11 @@ while 1:
 	except ValueError:
 		print("Введите действительное число")
 
-k = 4 if preferred_method == simpson.calculate else 2
-n = 4
-I_prev = preferred_method(function, a, b, n)
-n *= 2
-I_current = preferred_method(function, a, b, n)
-
-while abs((I_current - I_prev) / (2 ** k - 1)) > eps:
-	n *= 2
-	I_prev = I_current
-	I_current = preferred_method(function, a, b, n)
-
-print(f'Значение интеграла: {I_current}\nЧисло разбиения интервала: {n}')
+if preferred_method is None:
+	for i in range(len(methods_names)):
+		print()
+		print(methods_names[i], ':')
+		invoke(methods_list[i])
+else:
+	print()
+	invoke(preferred_method)
