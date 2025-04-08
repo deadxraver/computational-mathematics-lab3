@@ -26,6 +26,7 @@ methods_list = [
 	simpson.calculate,
 ]
 
+
 def invoke(method):
 	k = 4 if method == simpson.calculate else 2
 	n = 4
@@ -39,6 +40,7 @@ def invoke(method):
 		I_current = method(function, a, b, n)
 
 	print(f'Значение интеграла: {I_current}\nЧисло разбиения интервала: {n}')
+
 
 for i in range(len(functions)):
 	print(f'{i + 1}: {functions[i][0]}')
